@@ -275,12 +275,12 @@
         <div class="row">
           <!-- category insert -->
             <div class="col-md-6 mx-auto mt-5 bg-white py-2">
-                <form action="{{ url('cat_add') }}" method="post">
+                <form action="{{ url('cat_update/'.$data->id) }}" method="post">
                     @csrf
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label">Category Edit</label>
                         <input type="text" class="form-control" name="cat_name"
-                        value="{{$data[0]['cat_name']}}">
+                        value="{{$data->cat_name}}">
                     </div>
                     <button class="bg-success rounded-lg border-0 btn-lg" type="submit">update</button>
                 </form>

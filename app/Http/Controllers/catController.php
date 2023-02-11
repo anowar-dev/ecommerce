@@ -15,7 +15,7 @@ class catController extends Controller
         $catModel = new category();
         $catModel->cat_name = $data;
         $catModel->save();
-        return redirect('cat_show');
+        return redirect('cat_show')->with('massag', 'Successfully Inserted');
     }
 
     public function cat_show()
@@ -27,19 +27,15 @@ class catController extends Controller
 
     public function cat_edit($id)
     {
-        $cateModel = new category();
-        $cat_name = $cateModel->where('id', $id)->get();
-    
-        return view('admin.cat_edit', ["data"=>$cat_name]);
+        $data= category::find($id);
+        return view('admin.cat_edit', compact('data'));
     }
 
-    public function cat_update(Request $request)
+    public function cat_update(Request $request, $id)
     {
-        $catName = $request->cat_name;
-        $catId = $request->cat_id;
-        $catModel = category::find($catId);
-        $catModel->cat_name = $catName;
-        $catModel->save();
+        $cat_name = category::find($id);
+        $cat_name->cat_name = $request->cat_name;
+        $cat_name->save();
         return Redirect('cat_show/')->with('massage', 'Successfully Edited');
     }
 

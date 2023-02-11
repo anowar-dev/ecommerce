@@ -244,7 +244,6 @@
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
-
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" 
           data-widget="treeview" role="menu" data-accordion="false">
@@ -270,12 +269,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Category Page</h1>
+            <h1 class="m-0">Sub Category Page</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Category Page
+              <li class="breadcrumb-item active">Sub Category Page
               </li>
             </ol>
           </div><!-- /.col -->
@@ -290,18 +289,24 @@
         <div class="row">
           <!-- category insert -->
             <div class="col-md-6 mx-auto mt-5 bg-white py-3 rounded-3">
-              <h4 class="mb-4 text-bold">Main category form
+              <h4 class="mb-4 text-bold">Sub category form
                 <span class="">
-                  @if (session('massag'))
-                    <span class="alert alert-primary mx-auto">{{ session('massag') }}</span>
+                  @if (session('subCatInsert'))
+                    <span class="alert alert-primary mx-auto">{{ session('subCatInsert') }}</span>
                   @endif
                 </span>
               </h4>
-                <form action="{{ url('cat_add') }}" method="post">
+                <form action="{{ url('subCat') }}" method="post">
                     @csrf
+                    <select class="form-select w-100 py-2 my-2 border-primary" name="cat_id">
+                      <option selected>Select Category</option>
+                      @foreach ($data as $row)
+                      <option value="{{ $row->id }}">{{ $row->cat_name }}</option>
+                      @endforeach
+                    </select>
                     <div class="mb-3">
-                        <label for="exampleFormControlInput1" class="form-label">Category Name</label>
-                        <input type="text" class="form-control" name="cat_name" placeholder="Enter Category Name">
+                        <label for="exampleFormControlInput1" class="form-label">Sub Category Name</label>
+                        <input type="text" class="form-control" name="sub_cat_name" placeholder="Enter Category Name">
                     </div>
                     <button class="bg-success rounded-lg border-0 btn-lg" type="submit">Submit</button>
                 </form>
@@ -311,7 +316,7 @@
         <div class="row">
           <!-- category show -->
             <div class="col-md-6 mx-auto mt-5 bg-white">
-              <h4 class="mt-2 mb-4 text-bold">Categories List
+              <h4 class="mt-2 mb-4 text-bold">SubCategories List
                 <span class="">
                   @if (session('success'))
                     <span class="alert alert-danger mx-auto">{{ session('success') }}</span>
@@ -323,16 +328,18 @@
                 <table class="table table-bordered">
                     <thead>
                       <tr>
-                        <th scope="col">Id</th>
+                        <th scope="col">S.L</th>
                         <th scope="col">Cat Name</th>
+                        <th scope="col">SubCat Name</th>
                         <th scope="col" colspan="2">Action</th>
                       </tr>
                     </thead>
                     <tbody>
-                      @foreach ($data as $row)
+                      @foreach ($data as $d)
                       <tr>
                         <th scope="row">{{ $loop->iteration }}</th>
-                        <td>{{ $row->cat_name }}</td>
+                        <td>{{ $d->cat_name }}</td>
+                        <td>{{ $d->sub_cat_name }}</td>
                         <td><a class="btn btn-success" href="{{ url('cat_edit/'. $row->id) }}">Edit</a></td>
                         <td><a class="btn btn-danger" href="{{ url('cat_delete/'.$row->id) }}">Delete</a></td>
                       </tr>
